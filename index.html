@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Soumili!</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #fff5f8;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+    .cake-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 250px;
+      height: auto;
+      cursor: pointer;
+    }
+    #full-cake {
+      width: 250px;
+      height: auto;
+      user-select: none;
+    }
+    #left-cake, #right-cake {
+      width: 125px;
+      height: auto;
+      transition: transform 1s ease, opacity 1s ease;
+      position: absolute;
+      top: 0;
+      user-select: none;
+      opacity: 1;
+    }
+    #left-cake {
+      left: 0;
+    }
+    #right-cake {
+      right: 0;
+    }
+    #left-cake.split {
+      transform: translateX(-200px);
+    }
+    #right-cake.split {
+      transform: translateX(200px);
+    }
+    #left-cake.fade-out,
+    #right-cake.fade-out {
+      opacity: 0;
+    }
+    .cake-text {
+      margin-top: 280px;
+      font-size: 1.2em;
+      color: #c92a2a;
+    }
+    .balloon {
+      position: absolute;
+      width: 60px;
+      animation: float 5s linear forwards;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(100vh);
+      }
+      100% {
+        transform: translateY(-100vh);
+      }
+    }
+    .message {
+      font-size: 2em;
+      color: #d6336c;
+      margin-top: 20px;
+    }
+    #photo {
+      width: 200px;
+      border-radius: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="cake-container" id="cakeContainer" title="Click to cut the cake!">
+    <img src="cake.jpg" alt="Full Cake" id="full-cake" />
+    <img src="cake-left.jpg" alt="Cake Left" id="left-cake" class="hidden" />
+    <img src="cake-right.jpg" alt="Cake Right" id="right-cake" class="hidden" />
+  </div>
+  <div class="cake-text" id="cakeText">🎂 Tap on the cake to cut it!</div>
+
+  <div id="balloons" class="hidden">
+    <img src="balloon.jpg" class="balloon" style="left: 10%" />
+    <img src="balloon.jpg" class="balloon" style="left: 30%" />
+    <img src="balloon.jpg" class="balloon" style="left: 50%" />
+    <img src="balloon.jpg" class="balloon" style="left: 70%" />
+    <img src="balloon.jpg" class="balloon" style="left: 90%" />
+  </div>
+
+  <div id="wish" class="hidden">
+    <p class="message">🎉 Happy 20th Birthday, Soumili! 🎉</p>
+    <p class="message">You're amazing, and I'm lucky to have you as my best friend 💖</p>
+    <img src="soumili.jpg" alt="Soumili's Photo" id="photo" />
+  </div>
+
+  <script>
+    const cakeContainer = document.getElementById('cakeContainer');
+    const fullCake = document.getElementById('full-cake');
+    const leftCake = document.getElementById('left-cake');
+    const rightCake = document.getElementById('right-cake');
+    const balloons = document.getElementById('balloons');
+    const wish = document.getElementById('wish');
+    const cakeText = document.getElementById('cakeText');
+
+    cakeContainer.addEventListener('click', () => {
+      // Hide full cake
+      fullCake.classList.add('hidden');
+
+      // Show cake halves
+      leftCake.classList.remove('hidden');
+      rightCake.classList.remove('hidden');
+
+      // Animate split
+      setTimeout(() => {
+        leftCake.classList.add('split');
+        rightCake.classList.add('split');
+        cakeText.style.display = 'none';
+      }, 50);
+
+      // After split animation, show balloons
+      setTimeout(() => {
+        balloons.classList.remove('hidden');
+
+        // After 3s, pop balloons (fade out)
+        setTimeout(() => {
+          // Fade out balloons
+          [...balloons.children].forEach(balloon => {
+            balloon.style.opacity = '0';
+          });
+
+          // Fade out cake halves
+          leftCake.classList.add('fade-out');
+          rightCake.classList.add('fade-out');
+
+          // After fade-out animations, hide balloons and cake halves, show wishes
+          setTimeout(() => {
+            balloons.classList.add('hidden');
+            leftCake.classList.add('hidden');
+            rightCake.classList.add('hidden');
+            wish.classList.remove('hidden');
+          }, 1000);
+        }, 3000);
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
